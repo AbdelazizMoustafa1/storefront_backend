@@ -8,8 +8,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Index 
 - Show
 - Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
 
 #### Users
 - Index [token required]
@@ -25,18 +23,29 @@ These are the notes from a meeting with the frontend developer that describe wha
 -  id
 - name
 - price
-- [OPTIONAL] category
 
 #### User
 - id
-- firstName
-- lastName
+- username
 - password
 
 #### Orders
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
 
+#### order products
+- id
+- product id
+- order id
+- quantity of product
+
+## Databse tables
+
+#### Product
+
+#### User
+
+#### Orders
+
+#### order products

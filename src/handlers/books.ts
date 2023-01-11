@@ -8,6 +8,7 @@ const index = async (_req: Request, res: Response) => {
     res.json(books)
 }
 
+
 const showRow = async (req: Request, res: Response) => {
     const bookToShow = await store.showRow(req.body.id)
     res.json(bookToShow)
