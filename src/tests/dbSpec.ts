@@ -34,6 +34,10 @@ const newOrderProduct: OrderProduct = {
 };
 
 describe('A Model For A User', () => {
+  beforeAll((): void => {
+    console.log('before all A User');
+  });
+
   it('tests the create method of the class', () => {
     expect(userStore.create).toBeDefined();
   });
@@ -63,6 +67,10 @@ describe('A Model For A User', () => {
 });
 
 describe('A Model For A Product', () => {
+  beforeAll((): void => {
+    console.log('before all A Product');
+  });
+
   it('tests index presence', () => {
     expect(productStore.index).toBeDefined();
   });
@@ -100,6 +108,7 @@ describe('A Model For A Product', () => {
 
 describe('A Model For An Order', () => {
   beforeAll(async () => {
+    console.log('before all An Order');
     const conn = await client.connect();
 
     const sql = `DELETE FROM users;
