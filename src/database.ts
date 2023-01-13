@@ -12,7 +12,7 @@ const {
   ENV
 } = process.env;
 
-let client = new Pool({
+let client: Pool = new Pool({
   host: POSTGRES_HOST,
   database: POSTGRES_DB,
   user: POSTGRES_USER,

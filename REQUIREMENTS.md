@@ -5,18 +5,24 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
+- Index /products[GET]
+- Show /products/:id [GET]
+- Create [token required] /products [POST] body: {name, price}
 
 #### Users
 - Index [token required]
 - Show [token required]
-- Create N[token required]
+- Create (/users) [POST] N[token required] body: {user_name,first_name,last_name, password}
+- Current Order by user (/users/:id/orders) [GET] (args: user id)[token required]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- create (/orders) [POST] body : {user_id}
+- Set status (/orders/:id) PATCH [token required]
+- Add product (/orders/:id) [POST] [token required] body : {products_id, quantity}
+- Current Order by user (/users/:id/orders) [GET] (args: user id)[token required]
+
+#### Authenitication
+- Authenticate (\authenticate) [POST] body: [username, password]
 
 ## Data Shapes
 #### Product
@@ -26,7 +32,9 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### User
 - id
-- username
+- user_name
+- first_name
+- last_name
 - password
 
 #### Orders
@@ -40,12 +48,66 @@ These are the notes from a meeting with the frontend developer that describe wha
 - order id
 - quantity of product
 
-## Databse tables
+## Data Schemas
 
 #### Product
 
+                                    Table "public.products"
+ Column |          Type          | Collation | Nullable |               Default
+--------+------------------------+-----------+----------+--------------------------------------
+ id     | integer                |           | not null | nextval('products_id_seq'::regclass)
+ name   | character varying(100) |           | not null |
+ price  | integer                |           | not null |
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+    "products_name_key" UNIQUE CONSTRAINT, btree (name)
+Referenced by:
+    TABLE "ordersproducts" CONSTRAINT "ordersproducts_products_id_fkey" FOREIGN KEY (products_id) REFERENCES products(id)
+
+
 #### User
+
+                                      Table "public.users"
+   Column   |          Type          | Collation | Nullable |              Default
+------------+------------------------+-----------+----------+-----------------------------------
+ id         | integer                |           | not null | nextval('users_id_seq'::regclass)
+ user_name  | character varying(100) |           | not null |
+ first_name | character varying(100) |           | not null |
+ last_name  | character varying(100) |           | not null |
+ password   | character varying(100) |           | not null |
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+    "users_user_name_key" UNIQUE CONSTRAINT, btree (user_name)
+Referenced by:
+    TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+
 
 #### Orders
 
+                               Table "public.orders"
+ Column  |     Type     | Collation | Nullable |              Default
+---------+--------------+-----------+----------+------------------------------------
+ id      | integer      |           | not null | nextval('orders_id_seq'::regclass)
+ user_id | integer      |           | not null |
+ status  | order_status |           | not null |
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+Referenced by:
+    TABLE "ordersproducts" CONSTRAINT "ordersproducts_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+
 #### order products
+
+                              Table "public.ordersproducts"
+   Column   |  Type   | Collation | Nullable |                  Default
+------------+---------+-----------+----------+--------------------------------------------
+ id         | integer |           | not null | nextval('ordersproducts_id_seq'::regclass)
+ quantity   | integer |           | not null |
+ order_id   | integer |           | not null |
+ product_id | integer |           | not null |
+Indexes:
+    "ordersproducts_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "ordersproducts_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+    "ordersproducts_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)

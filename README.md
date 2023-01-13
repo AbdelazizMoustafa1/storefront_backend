@@ -2,7 +2,31 @@
 
 ## Getting Started
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+- To get started, clone this repo and run `yarn or npm i` in your terminal at the project root.
+
+- Create a .env file, adding the following code into it which defines the variables:
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=shopping_dev
+POSTGRES_TEST_DB=shopping_test
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+ENV=dev
+BCRYPT_PASSWORD=your hash password goes here
+SALT_ROUNDS=number of rounds
+TOKEN_SECRET=yourSecretGoesHere
+
+- Create two databases for POSTGRES_DB, POSTGRES_TEST_DB, connect to psql and create a user and grant them all PRIVILEGES
+`
+CREATE USER shopping_user WITH PASSWORD 'password123';    
+CREATE DATABASE shopping;  
+\c shopping
+GRANT ALL PRIVILEGES ON DATABASE shopping TO shopping_user;
+CREATE DATABASE shopping_test;
+\c shopping_test
+GRANT ALL PRIVILEGES ON DATABASE shopping_test TO shopping_user;
+`
+
+- for the database, if port is not specified, postgres default 5432 is used, and port 3000 is used for the server.
 
 ## Required Technologies
 Your application must make use of the following libraries:
@@ -48,6 +72,8 @@ Set up the Express handlers to route incoming requests to the correct model meth
 Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
 
 ### 6. QA and `README.md`
+
+- to run tests for database run `npm run test-db`
 
 Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
 
