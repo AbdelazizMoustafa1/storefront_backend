@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 console.log('hello');
 app.get('/', function (_req: Request, res: Response) {
   res.send('Hello World!');
+
 });
 
 orders_routes(app);
@@ -22,5 +23,7 @@ users_routes(app);
 app.listen(port, () => {
   console.log(`starting app to run on port: ${port}`);
 });
+console.log('before all A User');
+
 
 export default app;
