@@ -10,25 +10,25 @@ export class ProductStore {
   async index(): Promise<Product[]> {
     try {
       const conn = await client.connect();
-      const sql = 'SELECT * FROM books';
+      const sql = 'SELECT * FROM products';
       const result = await conn.query(sql);
       conn.release();
       return result.rows;
     } catch (err) {
-      throw new Error(`Please fix the Error: ${(err as Error).message}`);
+      throw new Error(`Please fix the Error that is here!: ${(err as Error).message}`);
     }
   }
 
   async show(id: string): Promise<Product> {
     try {
       const conn = await client.connect();
-      const sql = 'SELECT * FROM books WHERE id=($1)';
+      const sql = 'SELECT * FROM products WHERE id=($1)';
       const result = await conn.query(sql, [id]);
       conn.release();
       return result.rows[0];
     } catch (err) {
       throw new Error(
-        `Couldn't find book ${id}. Error: ${(err as Error).message}`
+        `Couldn't find product ${id}. Error: ${(err as Error).message}`
       );
     }
   }
@@ -43,7 +43,7 @@ export class ProductStore {
       return result.rows[0];
     } catch (err) {
       throw new Error(
-        `Couldn't find book ${b}. Error: ${(err as Error).message}`
+        `Couldn't find product ${b}. Error: ${(err as Error).message}`
       );
     }
   }

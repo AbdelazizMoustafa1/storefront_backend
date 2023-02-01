@@ -11,7 +11,7 @@
     "startme": "nodemon src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "jasmine": "jasmine",
-    "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
+    "test": "rm -r build && npx tsc && ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
     "test-db": "npm run dbtest-reset && export ENV=test|| set ENV=test&& npm run dbtest-up && jasmine-ts src/models/tests/db_spec.ts && npm run dbtest-reset",
     "test-routes": "npm run dbtest-reset && export ENV=test|| set ENV=test&& npm run dbtest-up && jasmine-ts src/server-test.ts && npm run dbtest-reset",
     "dbtest-reset": "db-migrate reset --config ./database.json --e test",

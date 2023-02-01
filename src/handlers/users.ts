@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import { User, UserStore } from '../models/user';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import authenticater from '../middleware/authentication'
+// import { nextTick } from 'process';
 dotenv.config();
 
 const tokenSecret = process.env.TOKEN_SECRET;
@@ -14,11 +16,11 @@ const create = async (req: Request, res: Response) => {
       user_name: req.body.user_name,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
-      password: req.body.password
+      password: req.body.password,
     };
 
     const newUser = await store.create(user);
-    const token = jwt.sign(
+    let token = jwt.sign(
       {
         user: {
           user_name: newUser.user_name,
@@ -59,8 +61,10 @@ const authenticate = async (req: Request, res: Response) => {
 };
 
 const users_routes = (app: express.Application): void => {
-  app.post('/users', authenticate, create);
-  app.post('/authenticate', authenticate, authenticate);
+  // app.get('/users', index);
+  // app.get('/users/:id', show);
+  app.post('/users', authenticater, create);
+  app.post('/authenticate', authenticater, authenticate);
 };
 
 export default users_routes;

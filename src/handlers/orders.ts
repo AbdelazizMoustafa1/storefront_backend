@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import authenticate from '../middleware/authentication';
+import authenticater from '../middleware/authentication';
 import { Order, OrderStore } from '../models/order';
 
 const store = new OrderStore();
@@ -56,8 +56,8 @@ const setOrderStatus = async (req: Request, res: Response) => {
 };
 
 const orders_routes = (app: express.Application): void => {
-  app.post('/orders', authenticate, create);
-  app.post('/orders/:id', authenticate, addProduct);
+  app.post('/orders', authenticater, create);
+  app.post('/orders/:id', authenticater, addProduct);
   app.get('/users/:id/orders', getUserOrders);
   app.patch('/orders/:id', setOrderStatus);
 };
