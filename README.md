@@ -15,6 +15,16 @@ BCRYPT_PASSWORD=your hash password goes here
 SALT_ROUNDS=number of rounds
 TOKEN_SECRET=yourSecretGoesHere
 
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=shopping
+POSTGRES_TEST_DB=shopping_test
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+ENV=dev
+BCRYPT_PASSWORD=password
+SALT_ROUNDS=10
+TOKEN_SECRET=yourSecretGoesHere
+
 - Create two databases for POSTGRES_DB, POSTGRES_TEST_DB, connect to psql and create a user and grant them all PRIVILEGES
 `
 CREATE USER shopping_user WITH PASSWORD 'password123';    
